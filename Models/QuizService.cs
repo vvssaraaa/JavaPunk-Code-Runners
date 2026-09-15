@@ -1,4 +1,4 @@
-namespace CodeRunner.Services // Grupperer koden med andre deler av programmet
+namespace Javapunk.Models // Grupperer koden med andre deler av programmet
 {
     // Foreløpig kun core-logikk.
     // Representerer et spørsmål og svarene som hører til spørsmålet.
