@@ -303,4 +303,4 @@ VALUES
 -- boolean = 0 for false, 1 for true
 -- husk semikolon etter alle inserts
 -- avslutt med denne: 
--- sqlite3 database.db < DO_NOT_COMMIT.sql
+-- sqlite3 database.db < database_inserts.sql
