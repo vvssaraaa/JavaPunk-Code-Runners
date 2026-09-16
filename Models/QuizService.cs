@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 namespace Javapunk.Models
 {
     public class QuizService
@@ -39,6 +40,29 @@ namespace Javapunk.Models
                 .ToList();
             } //stokker også svarene slik at de også kommer i tilfeldig rekkefølge, ikke samme hver gang
 
+            return _questions;
+        }
+
+        //simple eksamen run som plukker tilfeldig ut 10 spørsmål fra modulene, stokker om. 
+        public async Task<List<Questions>> StartExamAsync(int questionCount = 10){
+            var questions = await _context.Questions
+            .Include(q => q.Answers)
+            .ToListAsync();
+
+            _questions = questions
+            .OrderBy(_ => _random.Next())
+            .Take(Math.Min(questionCount, questions.Count))
+            .ToList();
+
+            foreach(var question in _questions){
+                question.Answers = question.Answers
+                .OrderBy(_ => _random.Next())
+                .ToList();
+            } //stokker også svarene slik at de også kommer i tilfeldig rekkefølge, ikke samme hver gang
+
+            _currentIndex = 0;
+            Score = 0;
+            //reset scoren for eksamen
             return _questions;
         }
 
