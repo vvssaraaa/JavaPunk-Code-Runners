@@ -16,7 +16,7 @@ namespace Javapunk.Models
             _context = context;
         }
 
-        public async Task<List<Questions>> GetQuestionsForModuleAsync(int moduleId, int questionCount = 10)
+        public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10)
         { 
             //henter spørsmålene til den valgte modulen og svarene som tilhører
             var questions = await _context.Questions
@@ -41,10 +41,10 @@ namespace Javapunk.Models
             } //stokker også svarene slik at de også kommer i tilfeldig rekkefølge, ikke samme hver gang
 
             return _questions;
-        }
+           }
 
         //simple eksamen run som plukker tilfeldig ut 10 spørsmål fra modulene, stokker om. 
-        public async Task<List<Questions>> StartExamAsync(int questionCount = 10){
+        public async Task<List<Questions>> CreateExamAsync(int questionCount = 10){
             var questions = await _context.Questions
             .Include(q => q.Answers)
             .ToListAsync();
@@ -90,6 +90,44 @@ namespace Javapunk.Models
             _currentIndex++;
 
             return wasCorrect;
+        }
+        public async Task<Questions?> CreateNewQuestion(string questionText, List<string> answerOptions, int correctAnswerIndex, int moduleId){
+            if(string.IsNullOrWhiteSpace(questionText)){
+                return null;
+            }
+            if(answerOptions.Count < 2){
+                return null;
+            }
+            if(correctAnswerIndex < 0 || correctAnswerIndex >= answerOptions.Count){
+                return null;
+            }
+            //validering som passer på at spørsmålteksten ikke er tom, at det er minst 2 svar og at index for det riktige alternative ikke 
+            //overskreder antall svar det faktisk er. 
+            
+            Modules? module = await _context.Modules.FirstOrDefaultAsync(m => m.Id == moduleId);
+            if(module == null){
+                return null;
+            } //Henter modulen fra databasen med riktig Id, hvis modulen ikke finnes blir module null
+
+            Questions question = new Questions();
+            question.Question_text = questionText;
+            question.Modules = module;
+
+            foreach(string answerText in answerOptions){
+                Answers answer = new Answers();
+                answer.Answer_text = answerText;
+                answer.Is_correct = answerOptions.IndexOf(answerText) == correctAnswerIndex;
+                answer.Questions = question;
+
+                question.Answers.Add(answer);
+            }
+            //lager objekter for answer og question, setter at svarene tilhører et spesifikt spørsmål. 
+    
+            _context.Add(question);
+            
+            await _context.SaveChangesAsync();
+
+            return question;
         }
     }
 }

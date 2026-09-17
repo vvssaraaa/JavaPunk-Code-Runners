@@ -11,7 +11,7 @@ public class UserService{
     }
     //laget en metode som lar spilleren lage en bruker, simple validering at input ikke er tomt og at brukernavnet ikke er for kort eller langt
     //hvis alt stemmer så lager den ny bruker, med userscore satt til 0
-    public async Task<Users?> Create(string username){
+    public async Task<Users?> CreateUser(string username){
             if(string.IsNullOrWhiteSpace(username) || username.Length < 3 || username.Length > 20){
                 return null;
             }
