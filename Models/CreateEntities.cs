@@ -30,6 +30,8 @@ public class Questions
     public Modules Modules {get; set;}
     [Required]
     public string Question_text {get; set;}
+    
+    public List<Answers> Answers {get; set;} = new List<Answers>();
 }
 
 public class Answers
