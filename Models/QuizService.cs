@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-namespace Javapunk.Models
-{
-    public class QuizService
-    {
+namespace Javapunk.Models{
+
+    public class QuizService{
+
         private readonly Javapunk.Data.ApplicationDbContext _context;
+        private readonly ILogger<QuizService> _logger;
         private readonly Random _random = new(); //brukes til å lage tilfeldig rekkefølge
 
         private List<Questions> _questions = new();
@@ -11,13 +12,13 @@ namespace Javapunk.Models
 
         public int Score {get; private set;} 
 
-        public QuizService(Javapunk.Data.ApplicationDbContext context)
-        {
+        public QuizService(Javapunk.Data.ApplicationDbContext context, ILogger <QuizService> logger){
             _context = context;
+            _logger = logger;
         }
 
-        public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10)
-        { 
+        public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10){ 
+            try{
             //henter spørsmålene til den valgte modulen og svarene som tilhører
             var questions = await _context.Questions
             .Where(q => q.Modules.Id == moduleId)
@@ -39,12 +40,17 @@ namespace Javapunk.Models
                 .OrderBy(_ => _random.Next())
                 .ToList();
             } //stokker også svarene slik at de også kommer i tilfeldig rekkefølge, ikke samme hver gang
-
             return _questions;
            }
+           catch (Exception e){
+            _logger.LogError(e, "Failed to load quiz questions");
+            throw;
+           }
+        }
 
         //simple eksamen run som plukker tilfeldig ut 10 spørsmål fra modulene, stokker om. 
         public async Task<List<Questions>> CreateExamAsync(int questionCount = 10){
+            try{
             var questions = await _context.Questions
             .Include(q => q.Answers)
             .ToListAsync();
@@ -65,16 +71,19 @@ namespace Javapunk.Models
             //reset scoren for eksamen
             return _questions;
         }
+        catch(Exception e){
+            _logger.LogError(e, "Failed to load exam questions");
+            throw;
+        }
+    }
 
         public bool IsFinished => _currentIndex >= _questions.Count;
 
-        public Questions? GetCurrentQuestion()
-        {
+        public Questions? GetCurrentQuestion(){
             return IsFinished ? null : _questions[_currentIndex];
         }
 
-        public bool SubmitAnswer(int answerId)
-        {
+        public bool SubmitAnswer(int answerId){
             var current = GetCurrentQuestion();
 
             if (current is null)
@@ -103,7 +112,7 @@ namespace Javapunk.Models
             }
             //validering som passer på at spørsmålteksten ikke er tom, at det er minst 2 svar og at index for det riktige alternative ikke 
             //overskreder antall svar det faktisk er. 
-            
+            try{
             Modules? module = await _context.Modules.FirstOrDefaultAsync(m => m.Id == moduleId);
             if(module == null){
                 return null;
@@ -128,6 +137,11 @@ namespace Javapunk.Models
             await _context.SaveChangesAsync();
 
             return question;
+            }
+            catch(Exception e){
+                _logger.LogError(e, "Failed to create new question");
+                return null;
+            }
         }
-    }
-}
+     }
+   }
