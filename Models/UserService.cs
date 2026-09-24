@@ -4,10 +4,12 @@ namespace Javapunk.Models{
 public class UserService{
 
     private readonly Javapunk.Data.ApplicationDbContext _context;
+    private readonly ILogger<UserService> _logger;
 
-    public UserService(Javapunk.Data.ApplicationDbContext context)
+    public UserService(Javapunk.Data.ApplicationDbContext context, ILogger <UserService> logger)
     {
         _context = context;
+        _logger = logger;
     }
     //laget en metode som lar spilleren lage en bruker, simple validering at input ikke er tomt og at brukernavnet ikke er for kort eller langt
     //hvis alt stemmer så lager den ny bruker, med userscore satt til 0
@@ -15,6 +17,7 @@ public class UserService{
             if(string.IsNullOrWhiteSpace(username) || username.Length < 3 || username.Length > 20){
                 return null;
             }
+            try{
             if (await _context.Users.AnyAsync(u => u.User_name == username)){
                 return null;
             }
@@ -27,6 +30,11 @@ public class UserService{
                 await _context.SaveChangesAsync();
                 
                 return user; 
+            }
+            catch(Exception e){
+                _logger .LogError(e, "Failed to create username, invalid input");
+                return null;
+            }
         }
-}
+    }
 }
