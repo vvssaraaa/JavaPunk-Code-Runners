@@ -1,22 +1,74 @@
 @model IEnumerable<Questions>
 
-<div class="container">
+<style>
+    @* body {
+      background-image: url('/images/temporaryBackground.png');
+        background-size: cover;
+        background-position: center; *@
+    }
+    // Legge inn bildet som bakgrunn
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/temporaryBackground.png');
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px) brightness(0.7);
+        z-index: -1;
+   }
+    
+    .create-question-form {
+        font-family: 'PixelDigilove', sans-serif;
+        color: #f7e40f;
+        position: relative;
+        z-index: 1;
+        background-color: #544C70CC;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+</style>
+
+
+<div class="create-question-form container">
     <h2>Create Question</h2>
+
     <form asp-action="Create" method="post">
         <div class="form-group">
             <label for="QuestionText">Question Text</label>
             <input type="text" class="form-control" id="QuestionText" name="QuestionText" required />
         </div>
         <div class="form-group">
-            <label for="Answer">Answer</label>
-            <input type="text" class="form-control" id="Answer" name="Answer" required />
+            <label for="CorrectAnswer">Correct Answer</label>
+            <input type="text" class="form-control" id="CorrectAnswer" name="CorrectAnswer" required />
+        </div>
+        <div class="form-group">
+            <label for="WrongAnswer1">Wrong Answer 1</label>
+            <input type="text" class="form-control" id="WrongAnswer1" name="WrongAnswer1" required />
+        </div>
+        <div class="form-group">
+            <label for="WrongAnswer2">Wrong Answer 2</label>
+            <input type="text" class="form-control" id="WrongAnswer2" name="WrongAnswer2" required />
+        </div>
+        <div class="form-group">
+            <label for="WrongAnswer3">Wrong Answer 3</label>
+            <input type="text" class="form-control" id="WrongAnswer3" name="WrongAnswer3" required />
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
+
+
+    <!--Knapp for å komme til create question-siden. lassen er bootstrap sin
+    knappklasse. -->
     <p>
         <a class="btn btn-secondary"
-        asp-controller="Question"
-        asp-action="Create">Add Q!uestion</a>
+        asp-controller="Questions"
+        asp-action="Create">Add Question</a>
     </p>
 
 </div>

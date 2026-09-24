@@ -26,16 +26,45 @@ public class QuestionsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Questions question)
+    public IActionResult Create(CreateQuestionViewModel viewModel)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _context.Questions.Add(question);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return View(viewModel);
         }
-        return View(question);
+
+        var question = new Questions
+        {
+            Question_text = viewModel.QuestionText,
+            //Har satt modules til null for å unngå feil, men dette bør endres når moduler er implementert
+            Modules = null,
+            Answers = new List<Answers>
+            {
+                new Answers
+                {
+                    Answer_text = viewModel.CorrectAnswer,
+                    Is_correct = true
+                },
+                new Answers
+                {
+                    Answer_text = viewModel.WrongAnswer1,
+                    Is_correct = false
+                },
+                new Answers
+                {
+                    Answer_text = viewModel.WrongAnswer2,
+                    Is_correct = false
+                },
+                new Answers
+                {
+                    Answer_text = viewModel.WrongAnswer3,
+                    Is_correct = false
+                }
+            }
+        };
+
+        _context.Questions.Add(question);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+        }
     }
-
-
-}
