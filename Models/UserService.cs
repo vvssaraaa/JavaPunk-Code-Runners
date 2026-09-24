@@ -32,8 +32,29 @@ public class UserService{
                 return user; 
             }
             catch(Exception e){
-                _logger .LogError(e, "Failed to create username, invalid input");
+                _logger.LogError(e, "Failed to create username, invalid input");
                 return null;
+            }
+        }
+        //ny metode som legger til scoren fra en fullført run til den totale user scoren
+        public async Task<bool> AddScoreToUserScore(int userId, int score){
+            try{
+                Users? user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+                if(user == null)
+                {
+                    return false;
+                }
+                user.User_score += score;
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception e){
+                _logger.LogError(e, "Failed to add score to user score");
+                return false;
             }
         }
     }

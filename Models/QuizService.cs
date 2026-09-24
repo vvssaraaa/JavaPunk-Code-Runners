@@ -34,6 +34,7 @@ namespace Javapunk.Models{
 
             _currentIndex = 0;
             Score = 0;
+            //starter ny score for denne runnen
 
             foreach(var question in _questions){
                 question.Answers = question.Answers
@@ -68,7 +69,7 @@ namespace Javapunk.Models{
 
             _currentIndex = 0;
             Score = 0;
-            //reset scoren for eksamen
+            //Starter ny score for eksamen
             return _questions;
         }
         catch(Exception e){
