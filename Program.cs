@@ -31,5 +31,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+//Følger demoen i canvas
+app.MapDefaultControllerRoute();
 
 app.Run();

@@ -12,12 +12,19 @@ public class QuestionsController : Controller
     {
         _context = context;
     }
+    public IActionResult Index()
+    {
+        List<Questions> questions = _context.Questions.ToList();
+        var questionViewModel = new QuestionsViewModel(questions, "Questions");
+        return View(questionViewModel);
+    }
     
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
+
     [HttpPost]
     public IActionResult Create(Questions question)
     {
@@ -25,9 +32,10 @@ public class QuestionsController : Controller
         {
             _context.Questions.Add(question);
             _context.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction(nameof(Index));
         }
         return View(question);
     }
+
 
 }

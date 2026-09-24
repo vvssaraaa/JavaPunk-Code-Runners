@@ -1,0 +1,32 @@
+@model IEnumerable<Javapunk.Models.Questions>
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+    <title>Questions Table</title>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewBag.CurrentViewName</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Add question</th>
+                    <th>Add answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var question in Model)
+                {
+                    <tr>
+                        <td>@question.Question_text</td>
+                        <td>@question.Answers</td>
+                    </tr>
+                }
+            </tbody
+        </table>
+    </div>
+</body>
+</html>

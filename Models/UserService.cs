@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-namespace Javapunk.Models
+namespace Javapunk.Models{
 
 public class UserService{
 
@@ -28,4 +28,5 @@ public class UserService{
                 
                 return user; 
         }
+}
 }
