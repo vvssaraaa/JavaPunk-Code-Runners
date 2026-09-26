@@ -1,0 +1,59 @@
+@model List<Javapunk.Models.Modules>
+
+<style>
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/temporaryBackground.png');
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px) brightness(0.7);
+        z-index: -1;
+    }
+    .module-container {
+        font-family: 'PixelDigilove', sans-serif;
+        color: #f7e40f;
+        position: relative;
+        z-index: 1;
+        background-color: #544C70CC;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+    .module-button {
+        display: block;
+        width: 250px;
+        margin: 40px;
+    }
+
+    .module-button:nth-of-type(even){
+        margin-left: auto;
+    }
+    .module-button:nth-of-type(odd){
+        margin-right: auto;
+    }
+</style>
+
+<div class="module-container">
+
+    <h2>Choose a module!</h2>
+
+    @foreach (var module in Model)
+    {
+        <a class="btn btn-primary module-button"
+           asp-controller="Quiz"
+           asp-action="Start"
+           asp-route-moduleId="@module.Id"
+           asp-route-userId="@ViewBag.UserId">
+            @module.Module_name
+        </a>
+    }
+
+</div>
