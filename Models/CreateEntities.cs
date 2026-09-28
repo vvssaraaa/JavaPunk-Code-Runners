@@ -27,7 +27,7 @@ public class Questions
 {
     [Key]
     public int Id {get; set;}
-    public Modules Modules {get; set;}
+    public Modules? Modules {get; set;}
     [Required]
     public string Question_text {get; set;}
     
@@ -50,5 +50,5 @@ public class Completed_modules
     [Key]
     public int Id {get; set;}
     public Users Users {get; set;}
-    public Modules Modules {get; set;}
+    public Modules? Modules {get; set;}
 }

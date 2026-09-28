@@ -1,12 +1,8 @@
 @model IEnumerable<Questions>
 
 <style>
-    @* body {
-      background-image: url('/images/temporaryBackground.png');
-        background-size: cover;
-        background-position: center; *@
-    }
-    // Legge inn bildet som bakgrunn
+    
+    /* Legge inn bildet som bakgrunn */
     body::before {
         content: "";
         position: fixed;
@@ -18,7 +14,7 @@
         background-size: cover;
         background-position: center;
         filter: blur(8px) brightness(0.7);
-        z-index: -1;
+        z-index: 0;
    }
     
     .create-question-form {
