@@ -1,0 +1,57 @@
+@using Javapunk.ViewModels
+@model List<Javapunk.ViewModels.QuestionViewModel>
+
+@{
+    ViewData["Title"] = "DeleteIndex";
+}
+
+<style>
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/JavaPunkBakgrunn.png');
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px) brightness(0.7);
+        z-index: 0;
+   }
+    
+    .create-question-form {
+        font-family: 'PixelDigilove', sans-serif;
+        color: #f7e40f;
+        position: relative;
+        z-index: 1;
+        background-color: #544C70CC;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+</style>
+
+<div class="create-question-form container">
+    <h2>Delete Question</h2>
+        <div class="form-group">            
+                <ul>
+                @foreach (QuestionViewModel question in Model)
+                {
+                    <p>@question.QuestionText</p>
+                    <a class="btn btn-secondary"
+                    asp-controller="Questions"
+                    asp-action="Delete"
+                    asp-route-id=@question.QuestionId
+                    >Delete</a>
+                }
+                </ul>
+
+    <p>
+        <a class="btn btn-secondary"
+        asp-controller="Questions"
+        asp-action="Index">Back to options</a>
+    </p>
+
+</div>

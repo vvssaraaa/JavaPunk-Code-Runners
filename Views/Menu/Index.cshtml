@@ -43,9 +43,8 @@
 </style>
 
 <div class="container menu-container">
-    <h1>Question options</h1>
-    <a asp-controller="Questions" asp-action="Create" class="btn btn-primary optionbtn">Make your own question!</a>
-    <a asp-controller="Questions" asp-action="EditList" class="btn btn-primary optionbtn">Edit questions</a>
-    <a asp-controller="Questions" asp-action="DeleteIndex" class="btn btn-primary optionbtn">Delete questions</a>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary optionbtn">Back to main menu</a>
+    <h1>Main Menu</h1>
+    <a asp-controller="Modules" asp-action="Index" class="btn btn-primary optionbtn">Modules</a>
+    <button disabled="true" class="btn btn-primary optionbtn">Exam (WIP)</button>
+    <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>
 </div>

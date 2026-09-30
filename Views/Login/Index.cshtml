@@ -2,7 +2,6 @@
     ViewData["Title"] = "Index";
 }
 
-
 <style>
     body::before {
         content: "";
@@ -29,23 +28,27 @@
         margin: 40px auto;
         text-align: center;
     }
-    .menu-container {
+    .main-menu-container {
         background: none;
         margin: 0
     }
+    btn-primary {
+        font-size: 60px;
+    }
 
-    .optionbtn {
+    .loginbtn {
         font-size: 32px;
         margin-top: 40px;
-        min-width: 100%;
     }
 
 </style>
 
-<div class="container menu-container">
-    <h1>Question options</h1>
-    <a asp-controller="Questions" asp-action="Create" class="btn btn-primary optionbtn">Make your own question!</a>
-    <a asp-controller="Questions" asp-action="EditList" class="btn btn-primary optionbtn">Edit questions</a>
-    <a asp-controller="Questions" asp-action="DeleteIndex" class="btn btn-primary optionbtn">Delete questions</a>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary optionbtn">Back to main menu</a>
+<div class="container main-menu-container">
+    <label for="uname">Username:</label>
+    <input type="text" id="uname" name="uname"><br><br>
+    <label for="pwd">Password:</label>
+    <input type="text" id="pwd" name="Pwd"><br><br>
+    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary logintbtn">LOG IN</a>
+    <p>or...</p>
+    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary logintbtn">CREATE USER</a>
 </div>

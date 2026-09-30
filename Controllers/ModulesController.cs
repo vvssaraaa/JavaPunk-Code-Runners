@@ -10,7 +10,10 @@ public class ModulesController : Controller{
     public ModulesController(ApplicationDbContext context){
         _context = context;
     }
-    
+        public IActionResult Index()
+    {
+        return View();
+    }
     [HttpGet]
     public async Task<ActionResult> Index(int userId)
     {

@@ -1,8 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿<style>
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/JavaPunkBakgrunn.png');
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+    .container {
+        font-family: 'PixelDigilove', sans-serif;
+        color: #f7e40f;
+        position: relative;
+        z-index: 1;
+        background-color: #544C70CC;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 40px auto;
+        text-align: center;
+    }
+    .main-menu-container {
+        background: none;
+        margin: 0
+    }
+    btn-primary {
+        font-size: 60px;
+    }
+    .startbtn {
+        font-size: 32px;
+        margin-top: 40px;
+    }
+
+</style>
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container main-menu-container">
+    <h1>Javapunk Coderunners</h1>
+    <h2>Become the ultimate coderunner!</h2>
+    <a asp-controller="Login" asp-action="Index" class="btn btn-primary startbtn">START!</a>
 </div>

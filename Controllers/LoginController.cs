@@ -4,14 +4,13 @@ using Javapunk.Models;
 
 namespace Javapunk.Controllers;
 
-public class HomeController : Controller
+public class LoginController : Controller
 {
     public IActionResult Index()
     {
         return View();
     }
-
-
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

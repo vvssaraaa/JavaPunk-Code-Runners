@@ -1,7 +1,7 @@
-@model IEnumerable<Questions>
+@model Javapunk.ViewModels.CreateQuestionViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "EditQuestion";
 }
 
 <style>
@@ -19,7 +19,7 @@
         z-index: 0;
    }
     
-    .create-question-form {
+    .edit-question-form {
         font-family: 'PixelDigilove', sans-serif;
         color: #f7e40f;
         position: relative;
@@ -33,35 +33,35 @@
 </style>
 
 
-<div class="create-question-form container">
-    <h2>Create Question</h2>
-
-    <form asp-action="Create" method="post">
+<div class="edit-question-form container">
+    <h2>Edit Question</h2>
+    
+    <form asp-action="Edit" method="post" asp-route-id="@Model.QuestionId">
          <div class="form-group">
             <label for="Modules">Module (1-5)</label>
-            <input type="text" inputmode="numeric" class="form-control" id="Modules" name="Modules" required />
+            <input value="@Model.Modules" type="text" inputmode="numeric" class="form-control" id="Modules" name="Modules" required />
         </div>
         <div class="form-group">
             <label for="QuestionText">Question Text</label>
-            <input type="text" class="form-control" id="QuestionText" name="QuestionText" required />
+            <input value="@Model.QuestionText" type="text" class="form-control" id="QuestionText" name="QuestionText" required />
         </div>
         <div class="form-group">
             <label for="CorrectAnswer">Correct Answer</label>
-            <input type="text" class="form-control" id="CorrectAnswer" name="CorrectAnswer" required />
+            <input value="@Model.CorrectAnswer" type="text" class="form-control" id="CorrectAnswer" name="CorrectAnswer" required />
         </div>
         <div class="form-group">
             <label for="WrongAnswer1">Wrong Answer 1</label>
-            <input type="text" class="form-control" id="WrongAnswer1" name="WrongAnswer1" required />
+            <input value="@Model.WrongAnswer1" type="text" class="form-control" id="WrongAnswer1" name="WrongAnswer1" required />
         </div>
         <div class="form-group">
             <label for="WrongAnswer2">Wrong Answer 2</label>
-            <input type="text" class="form-control" id="WrongAnswer2" name="WrongAnswer2" required />
+            <input value="@Model.WrongAnswer2" type="text" class="form-control" id="WrongAnswer2" name="WrongAnswer2" required />
         </div>
         <div class="form-group">
             <label for="WrongAnswer3">Wrong Answer 3</label>
-            <input type="text" class="form-control" id="WrongAnswer3" name="WrongAnswer3" required />
+            <input value="@Model.WrongAnswer3" type="text" class="form-control" id="WrongAnswer3" name="WrongAnswer3" required />
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 
     
