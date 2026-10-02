@@ -11,8 +11,8 @@ public class UserService{
         _context = context;
         _logger = logger;
     }
-    //laget en metode som lar spilleren lage en bruker, simple validering at input ikke er tomt og at brukernavnet ikke er for kort eller langt
-    //hvis alt stemmer så lager den ny bruker, med userscore satt til 0
+     //Creates a new user. Validates that the username isn't empty and is a reasonable length, then checks it isn't already taken. 
+     //New users start with a score of 0.
     public async Task<Users?> CreateUser(string username){
             if(string.IsNullOrWhiteSpace(username) || username.Length < 3 || username.Length > 20){
                 return null;
@@ -36,7 +36,7 @@ public class UserService{
                 return null;
             }
         }
-        //ny metode som legger til scoren fra en fullført run til den totale user scoren
+        // Adds the score from a completed quiz run to the user's total score.
         public async Task<bool> AddScoreToUserScore(int userId, int score){
             try{
                 Users? user = await _context.Users

@@ -14,6 +14,7 @@ public class ModulesController : Controller{
     {
         return View();
     }
+    // Loads all modules from the database and passes them to the view, along with the current user's ID
     [HttpGet]
     public async Task<ActionResult> Index(int userId)
     {

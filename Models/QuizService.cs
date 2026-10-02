@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 namespace Javapunk.Models{
 
+    // Handles quiz logic for loading questions, checking answers, and creating new questions.
     public class QuizService{
 
         private readonly Javapunk.Data.ApplicationDbContext _context;
@@ -11,7 +12,7 @@ namespace Javapunk.Models{
             _context = context;
             _logger = logger;
         }
-
+        // Picks a random set of questions and their answers from a module.
         public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10){ 
             try{
         
@@ -37,6 +38,7 @@ namespace Javapunk.Models{
             throw;
            }
         }
+        // Loads one question by ID, including its answers.
         public async Task<Questions?> GetQuestionByIdAsync(int questionId){
         try{
            return await _context.Questions
@@ -48,6 +50,7 @@ namespace Javapunk.Models{
                 return null;
             } 
         }       
+        // Checks whether a given answer is the correct one for a specificquestion.
         public async Task<bool> CheckAnswerAsync(int questionId, int answerId){
             var question = await GetQuestionByIdAsync(questionId);
             
@@ -60,6 +63,7 @@ namespace Javapunk.Models{
             
             return answer?.Is_correct ?? false;
         }
+         // Picks a random set of questions from ALL modules (used for exam mode).
         public async Task<List<Questions>> CreateExamAsync(int questionCount = 10){
             try{
             var questions = await _context.Questions
@@ -84,7 +88,7 @@ namespace Javapunk.Models{
             throw;
         }
     }
-
+        // Validates input, then creates and saves a new question with its answers.
         public async Task<Questions?> CreateNewQuestion(string questionText, List<string> answerOptions, int correctAnswerIndex, int moduleId){
             if(string.IsNullOrWhiteSpace(questionText)){
                 return null;

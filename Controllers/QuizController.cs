@@ -5,6 +5,8 @@ using Javapunk.Data;
 
 namespace Javapunk.Controllers;
 
+// Handles a full quiz run. starting it, showing one question at a time, 
+// checking submitted answers, and saving the final score once finished.
 public class QuizController : Controller{
     
     private readonly QuizService _quizService;
@@ -15,6 +17,8 @@ public class QuizController : Controller{
         _userService = userService;
     }
 
+    //starts a quiz for a specific module, gets questions and redirects them to the first one. 
+    //no state is saved, everything is passed through the redirects. 
     [HttpGet]
     public async Task<IActionResult> Start(int moduleId, int userId){
         var questions = await _quizService.GetQuizQuestionsAsync(moduleId);
@@ -41,6 +45,7 @@ public class QuizController : Controller{
         return RedirectToAction("Question", new{questionIds, currentIndex = 0, score = 0, userId});
     }
  
+    //shows which question the user is currently on and passes the current score and userId to the view. 
     [HttpGet]
     public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId){
         List<int> questionIdList = questionIds .Split(",") .Select(int.Parse) .ToList();
@@ -64,7 +69,7 @@ public class QuizController : Controller{
 
         return View(question); 
     }
- 
+    //checks the answer and updates the score if correct, then redirects to the next question. 
     [HttpPost]
     public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId, int answerId){
         List<int> questionIdList = questionIds .Split(",") .Select(int.Parse) .ToList();
@@ -78,7 +83,7 @@ public class QuizController : Controller{
         }
         return RedirectToAction("Question", new {questionIds, currentIndex = currentIndex + 1, score, userId});
     }
- 
+    //saves the runs final score to the user total and shows it. 
     [HttpGet]
     public async Task<IActionResult> Result(int userId, int score){
         bool success = await _userService.AddScoreToUserScore(userId, score);
