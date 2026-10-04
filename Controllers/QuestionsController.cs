@@ -27,6 +27,7 @@ public class QuestionsController : Controller
         return View();
     }
 
+    // Loads question based on id, and returns view with loaded questions data (including answers and modules)
     public IActionResult EditQuestion(int id)
     {
         var question = _context.Questions
@@ -37,6 +38,7 @@ public class QuestionsController : Controller
         return View(CreateQuestionViewModel.toDomain(question));
     }
 
+    // Function to update question data based on given values in viewModel
     [HttpPost]
     public async Task<IActionResult> Edit(int id, CreateQuestionViewModel viewModel)
     {
@@ -48,11 +50,13 @@ public class QuestionsController : Controller
         var module = modules.Find(module => module.Id == viewModel.Modules) 
         ?? throw new Exception($"A module with id {viewModel.Modules} does not exist");
         
+        // We need to load answers and modules here since they can also be edited
         var question = _context.Questions
         .Include(q => q.Answers)
         .Include(q => q.Modules)
         .Where(q => q.Id == id).ToList().First();
 
+        // Here we clear answers, before saving the new values
         question.Answers.Clear();
             var answers = new List<Answers>
             {
@@ -86,6 +90,7 @@ public class QuestionsController : Controller
         return RedirectToAction(nameof(EditList));
     }
 
+    // This function loads all questions, and returns a view where the user can select which ones to edit
     public async Task<IActionResult> EditList()
     {
         var questions = await _context.Questions.ToListAsync();
@@ -93,6 +98,7 @@ public class QuestionsController : Controller
         return View(questionsForEditing);
     }
 
+    // This function creates a new question, based on the given values in viewModel
     [HttpPost]
     public async Task<IActionResult> Create(CreateQuestionViewModel viewModel)
     {
@@ -137,6 +143,7 @@ public class QuestionsController : Controller
         return View();
         }
 
+    // This function loads all questions, and returns a view where the user can select which ones to delete
     [HttpGet]
     public async Task<IActionResult> DeleteIndex()
     {
@@ -145,6 +152,7 @@ public class QuestionsController : Controller
         return View(questionsForDeletion);
     }
 
+    // This function deletes a question based on the given id, and also removes the answers for that question
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
