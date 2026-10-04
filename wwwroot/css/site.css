@@ -21,6 +21,40 @@ body {
   margin-bottom: 60px;
 }
 
+/* Felles bakgrunnsbilde for alle sider */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/images/JavaPunkBakgrunn.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.7);
+  z-index: -1;
+}
+
+/* Fjerne blur-effekten når body har klassen "no-blur" */
+body.no-blur::before {
+  filter: none;
+}
+
+/*Felles styling for alle hoved-bokser på alle sider*/
+.container.main-box {
+  font-family: 'PixelDigilove', sans-serif;
+  color: #f7e40f;
+  position: relative;
+  z-index: 1;
+  background-color: #544C70CC;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -30,11 +64,69 @@ body {
   text-align: start;
 }
 
-/* Custom font*/
+/* Legge til egen font*/
+/* Pixel Digilove normal*/
 @font-face {
   font-family: 'PixelDigilove';
   src: url('../fonts/PixelDigivolve.otf') format('opentype'); 
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+/* Pixel Digilove italic*/
+@font-face {
+  font-family: 'PixelDigiloveItalic';
+  src: url('../fonts/PixelDigivolveItalic.otf') format('opentype'); 
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+/*Knapper på sidene*/
+/* Start-knapp på startside */
+.startbtn {
+  font-size: 32px;
+  margin-top: 40px;
+  background-color: #6EBDEA;
+  border-color: #6B9BCF;
+}
+
+.startbtn:hover {
+  background-color: #6B9BCF;
+  border-color: #5B5F90;
+}
+
+/*Generell styling for alle knapper på alle sider*/
+.btn-primary {
+  font-size: 32px;
+  color: #C8658C;
+  background-color: #2A143D;
+  border-color: #1B112C;
+}
+
+.btn-primary:hover {
+  color: #DD8D9F;
+  background-color: #47195D;
+  border-color: #47195D;
+}
+
+.optionbtn {
+  font-size: 32px;
+  margin-top: 40px;
+  min-width: 100%;
+}
+
+/*Knappene i moduler-siden*/
+.module-button {
+  display: block;
+  padding: 10px 20px;
+  font-size: 32px;
+}
+
+.module-button:nth-of-type(even){
+  margin-left: auto;
+}
+
+.module-button:nth-of-type(odd){
+  margin-right: auto;
 }

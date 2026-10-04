@@ -2,53 +2,12 @@
     ViewData["Title"] = "Index";
 }
 
-<style>
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('/images/JavaPunkBakgrunn.png');
-        background-size: cover;
-        background-position: center;
-        filter: blur(8px) brightness(0.7);
-        z-index: -1;
-    }
-    .container {
-        font-family: 'PixelDigilove', sans-serif;
-        color: #f7e40f;
-        position: relative;
-        z-index: 1;
-        background-color: #544C70CC;
-        padding: 30px;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: 40px auto;
-        text-align: center;
-    }
-    .main-menu-container {
-        background: none;
-        margin: 0
-    }
-    btn-primary {
-        font-size: 60px;
-    }
-
-    .loginbtn {
-        font-size: 32px;
-        margin-top: 40px;
-    }
-
-</style>
-
-<div class="container main-menu-container">
+<div class="container main-box">
     <label for="uname">Username:</label>
     <input type="text" id="uname" name="uname"><br><br>
     <label for="pwd">Password:</label>
     <input type="text" id="pwd" name="Pwd"><br><br>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary logintbtn">LOG IN</a>
+    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary">LOG IN</a>
     <p>or...</p>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary logintbtn">CREATE USER</a>
+    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary">CREATE USER</a>
 </div>

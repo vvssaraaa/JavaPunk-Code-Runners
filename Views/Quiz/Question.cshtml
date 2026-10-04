@@ -4,36 +4,8 @@
    ViewData["Title"] = "Question";
 }
 
-<style>
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('/images/JavaPunkBakgrunn.png');
-        background-size: cover;
-        background-position: center;
-        filter: blur(8px) brightness(0.7);
-        z-index: -1;
-    }
-    .Question-Container {
-        font-family: 'PixelDigilove', sans-serif;
-        color: #f7e40f;
-        position: relative;
-        z-index: 1;
-        background-color: #544C70CC;
-        padding: 30px;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: 40px auto;
-        text-align: center;
-    }
-</style>
 
-
-<div class="Question-Container">
+<div class="container main-box">
 <h2>@Model.Question_text</h2>
 
 <form method="post" asp-controller="Quiz" asp-action="Question">

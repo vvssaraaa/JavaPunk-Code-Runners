@@ -2,47 +2,7 @@
     ViewData["Title"] = "Index";
 }
 
-
-<style>
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('/images/JavaPunkBakgrunn.png');
-        background-size: cover;
-        background-position: center;
-        filter: blur(8px) brightness(0.7);
-        z-index: -1;
-    }
-    .container {
-        font-family: 'PixelDigilove', sans-serif;
-        color: #f7e40f;
-        position: relative;
-        z-index: 1;
-        background-color: #544C70CC;
-        padding: 30px;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: 40px auto;
-        text-align: center;
-    }
-    .menu-container {
-        background: none;
-        margin: 0
-    }
-
-    .optionbtn {
-        font-size: 32px;
-        margin-top: 40px;
-        min-width: 100%;
-    }
-
-</style>
-
-<div class="container menu-container">
+<div class="container main-box">
     <h1>Question options</h1>
     <a asp-controller="Questions" asp-action="Create" class="btn btn-primary optionbtn">Make your own question!</a>
     <a asp-controller="Questions" asp-action="EditList" class="btn btn-primary optionbtn">Edit questions</a>
