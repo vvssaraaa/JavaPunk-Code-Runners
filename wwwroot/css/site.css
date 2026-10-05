@@ -52,6 +52,10 @@ body.no-blur::before {
   border-radius: 10px;
   max-width: 600px;
   margin: 40px auto;
+}
+/*De som skal være sentrert på siden*/
+.container.main-box.centered {
+  margin: 40px auto;
   text-align: center;
 }
 
