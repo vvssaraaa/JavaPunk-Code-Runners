@@ -2,11 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Javapunk.Models;
 using Javapunk.ViewModels;
 using Javapunk.Data;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-using System.Security.AccessControl;
-using System.Numerics;
-using System.Diagnostics;
 
 namespace Javapunk.Controllers;
 public class QuestionsController : Controller

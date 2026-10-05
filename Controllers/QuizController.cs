@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Javapunk.Models;
-using Javapunk.ViewModels;
-using Javapunk.Data;
 
 namespace Javapunk.Controllers;
 

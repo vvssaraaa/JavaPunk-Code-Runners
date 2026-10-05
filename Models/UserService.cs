@@ -18,9 +18,9 @@ public class UserService{
                 return null;
             }
             try{
-            if (await _context.Users.AnyAsync(u => u.User_name == username)){
-                return null;
-            }
+                if (await _context.Users.AnyAsync(u => u.User_name == username)){
+                    return null;
+                }
                 Users user = new Users();
                 user.User_name = username;
                 user.User_score = 0;

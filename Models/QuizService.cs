@@ -16,34 +16,34 @@ namespace Javapunk.Models{
         public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10){ 
             try{
         
-            var questions = await _context.Questions
-            .Where(q => q.Modules.Id == moduleId)
-            .Include(q => q.Answers)
-            .ToListAsync();
+                var questions = await _context.Questions
+                .Where(q => q.Modules.Id == moduleId)
+                .Include(q => q.Answers)
+                .ToListAsync();
 
-            var selectedQuestions = questions
-            .OrderBy(_ => _random.Next())
-            .Take(Math.Min(questionCount, questions.Count))
-            .ToList();
-        
-            foreach(var question in selectedQuestions){
-                question.Answers = question.Answers
+                var selectedQuestions = questions
                 .OrderBy(_ => _random.Next())
+                .Take(Math.Min(questionCount, questions.Count))
                 .ToList();
-            } 
+        
+                foreach(var question in selectedQuestions){
+                    question.Answers = question.Answers
+                    .OrderBy(_ => _random.Next())
+                    .ToList();
+                } 
             return selectedQuestions;
            }
            catch (Exception e){
-            _logger.LogError(e, "Failed to load quiz questions");
-            throw;
+                _logger.LogError(e, "Failed to load quiz questions");
+                throw;
            }
         }
         // Loads one question by ID, including its answers.
         public async Task<Questions?> GetQuestionByIdAsync(int questionId){
-        try{
-           return await _context.Questions
-                .Include(q => q.Answers)
-                .FirstOrDefaultAsync(q => q.Id == questionId);
+            try{
+                return await _context.Questions
+                    .Include(q => q.Answers)
+                    .FirstOrDefaultAsync(q => q.Id == questionId);
         }
         catch(Exception e){
                 _logger.LogError(e, "Failed to load question");
@@ -55,7 +55,7 @@ namespace Javapunk.Models{
             var question = await GetQuestionByIdAsync(questionId);
             
             if (question == null){
-             return false;
+                return false;
             }
             
             var answer = question.Answers
@@ -66,14 +66,14 @@ namespace Javapunk.Models{
          // Picks a random set of questions from ALL modules (used for exam mode).
         public async Task<List<Questions>> CreateExamAsync(int questionCount = 10){
             try{
-            var questions = await _context.Questions
-            .Include(q => q.Answers)
-            .ToListAsync();
+                var questions = await _context.Questions
+                .Include(q => q.Answers)
+                .ToListAsync();
 
-            var selectedQuestions = questions
-            .OrderBy(_ => _random.Next())
-            .Take(Math.Min(questionCount, questions.Count))
-            .ToList();
+                var selectedQuestions = questions
+                .OrderBy(_ => _random.Next())
+                .Take(Math.Min(questionCount, questions.Count))
+                .ToList();
 
             foreach(var question in selectedQuestions){
                 question.Answers = question.Answers
