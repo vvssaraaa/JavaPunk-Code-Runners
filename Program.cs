@@ -9,8 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("programDb")));
-    builder.Services.AddScoped<QuizService>();
-    builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<QuizService>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

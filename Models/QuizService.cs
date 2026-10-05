@@ -1,133 +1,157 @@
 using Microsoft.EntityFrameworkCore;
-namespace Javapunk.Models{
+namespace Javapunk.Models
+{
 
     // Handles quiz logic for loading questions, checking answers, and creating new questions.
-    public class QuizService{
+    public class QuizService
+    {
 
         private readonly Javapunk.Data.ApplicationDbContext _context;
         private readonly ILogger<QuizService> _logger;
         private readonly Random _random = new(); //brukes til å lage tilfeldig rekkefølge
 
-        public QuizService(Javapunk.Data.ApplicationDbContext context, ILogger <QuizService> logger){
+        public QuizService(Javapunk.Data.ApplicationDbContext context, ILogger<QuizService> logger)
+        {
             _context = context;
             _logger = logger;
         }
         // Picks a random set of questions and their answers from a module.
-        public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10){ 
-            try{
-        
-            var questions = await _context.Questions
-            .Where(q => q.Modules.Id == moduleId)
-            .Include(q => q.Answers)
-            .ToListAsync();
+        public async Task<List<Questions>> GetQuizQuestionsAsync(int moduleId, int questionCount = 10)
+        {
+            try
+            {
 
-            var selectedQuestions = questions
-            .OrderBy(_ => _random.Next())
-            .Take(Math.Min(questionCount, questions.Count))
-            .ToList();
-        
-            foreach(var question in selectedQuestions){
-                question.Answers = question.Answers
+                var questions = await _context.Questions
+                .Where(q => q.Modules.Id == moduleId)
+                .Include(q => q.Answers)
+                .ToListAsync();
+
+                var selectedQuestions = questions
                 .OrderBy(_ => _random.Next())
+                .Take(Math.Min(questionCount, questions.Count))
                 .ToList();
-            } 
-            return selectedQuestions;
-           }
-           catch (Exception e){
-            _logger.LogError(e, "Failed to load quiz questions");
-            throw;
-           }
+
+                foreach (var question in selectedQuestions)
+                {
+                    question.Answers = question.Answers
+                    .OrderBy(_ => _random.Next())
+                    .ToList();
+                }
+                return selectedQuestions;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to load quiz questions");
+                throw;
+            }
         }
         // Loads one question by ID, including its answers.
-        public async Task<Questions?> GetQuestionByIdAsync(int questionId){
-        try{
-           return await _context.Questions
-                .Include(q => q.Answers)
-                .FirstOrDefaultAsync(q => q.Id == questionId);
-        }
-        catch(Exception e){
+        public async Task<Questions?> GetQuestionByIdAsync(int questionId)
+        {
+            try
+            {
+                return await _context.Questions
+                    .Include(q => q.Answers)
+                    .FirstOrDefaultAsync(q => q.Id == questionId);
+            }
+            catch (Exception e)
+            {
                 _logger.LogError(e, "Failed to load question");
                 return null;
-            } 
-        }       
-        // Checks whether a given answer is the correct one for a specificquestion.
-        public async Task<bool> CheckAnswerAsync(int questionId, int answerId){
-            var question = await GetQuestionByIdAsync(questionId);
-            
-            if (question == null){
-             return false;
             }
-            
+        }
+        // Checks whether a given answer is the correct one for a specificquestion.
+        public async Task<bool> CheckAnswerAsync(int questionId, int answerId)
+        {
+            var question = await GetQuestionByIdAsync(questionId);
+
+            if (question == null)
+            {
+                return false;
+            }
+
             var answer = question.Answers
             .FirstOrDefault(a => a.Id == answerId);
-            
+
             return answer?.Is_correct ?? false;
         }
-         // Picks a random set of questions from ALL modules (used for exam mode).
-        public async Task<List<Questions>> CreateExamAsync(int questionCount = 10){
-            try{
-            var questions = await _context.Questions
-            .Include(q => q.Answers)
-            .ToListAsync();
+        // Picks a random set of questions from ALL modules (used for exam mode).
+        public async Task<List<Questions>> CreateExamAsync(int questionCount = 10)
+        {
+            try
+            {
+                var questions = await _context.Questions
+                .Include(q => q.Answers)
+                .ToListAsync();
 
-            var selectedQuestions = questions
-            .OrderBy(_ => _random.Next())
-            .Take(Math.Min(questionCount, questions.Count))
-            .ToList();
-
-            foreach(var question in selectedQuestions){
-                question.Answers = question.Answers
+                var selectedQuestions = questions
                 .OrderBy(_ => _random.Next())
+                .Take(Math.Min(questionCount, questions.Count))
                 .ToList();
-            }
 
-            return selectedQuestions;
+                foreach (var question in selectedQuestions)
+                {
+                    question.Answers = question.Answers
+                    .OrderBy(_ => _random.Next())
+                    .ToList();
+                }
+
+                return selectedQuestions;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to load exam questions");
+                throw;
+            }
         }
-        catch(Exception e){
-            _logger.LogError(e, "Failed to load exam questions");
-            throw;
-        }
-    }
         // Validates input, then creates and saves a new question with its answers.
-        public async Task<Questions?> CreateNewQuestion(string questionText, List<string> answerOptions, int correctAnswerIndex, int moduleId){
-            if(string.IsNullOrWhiteSpace(questionText)){
+        public async Task<Questions?> CreateNewQuestion(string questionText, List<string> answerOptions, int correctAnswerIndex, int moduleId)
+        {
+            if (string.IsNullOrWhiteSpace(questionText))
+            {
                 return null;
             }
-            if(answerOptions.Count < 2){
+            if (answerOptions.Count < 2)
+            {
                 return null;
             }
-            if(correctAnswerIndex < 0 || correctAnswerIndex >= answerOptions.Count){
-                return null;
-            }
-           
-            try{
-            Modules? module = await _context.Modules.FirstOrDefaultAsync(m => m.Id == moduleId);
-            if(module == null){
+            if (correctAnswerIndex < 0 || correctAnswerIndex >= answerOptions.Count)
+            {
                 return null;
             }
 
-            Questions question = new Questions();
-            question.Question_text = questionText;
-            question.Modules = module;
+            try
+            {
+                Modules? module = await _context.Modules.FirstOrDefaultAsync(m => m.Id == moduleId);
+                if (module == null)
+                {
+                    return null;
+                }
 
-            foreach(string answerText in answerOptions){
-                Answers answer = new Answers();
-                answer.Answer_text = answerText;
-                answer.Is_correct = answerOptions.IndexOf(answerText) == correctAnswerIndex;
-                answer.Questions = question;
+                Questions question = new Questions();
+                question.Question_text = questionText;
+                question.Modules = module;
 
-                question.Answers.Add(answer);
-            }    
-            _context.Add(question);
-            
-            await _context.SaveChangesAsync();
+                foreach (string answerText in answerOptions)
+                {
+                    Answers answer = new Answers();
+                    answer.Answer_text = answerText;
+                    answer.Is_correct = answerOptions.IndexOf(answerText) == correctAnswerIndex;
+                    answer.Questions = question;
 
-            return question;
+                    question.Answers.Add(answer);
+                }
+                _context.Add(question);
+
+                await _context.SaveChangesAsync();
+
+                return question;
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 _logger.LogError(e, "Failed to create new question");
                 return null;
             }
         }
-     }
-   }
+    }
+}

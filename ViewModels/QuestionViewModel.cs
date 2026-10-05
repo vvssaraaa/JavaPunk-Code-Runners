@@ -3,11 +3,11 @@ using Javapunk.Models;
 
 namespace Javapunk.ViewModels
 {
-   public class QuestionViewModel
+    public class QuestionViewModel
     {
-      [Required]
-      public int QuestionId {get; set; } =0;
-       [Required]
-       public string QuestionText { get; set; } ="";
+        [Required]
+        public int QuestionId { get; set; } = 0;
+        [Required]
+        public string QuestionText { get; set; } = "";
     }
 }
