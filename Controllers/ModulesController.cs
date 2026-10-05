@@ -4,13 +4,15 @@ using Javapunk.Data;
 
 namespace Javapunk.Controllers;
 
-public class ModulesController : Controller{
+public class ModulesController : Controller
+{
     private readonly ApplicationDbContext _context;
 
-    public ModulesController(ApplicationDbContext context){
+    public ModulesController(ApplicationDbContext context)
+    {
         _context = context;
     }
-        public IActionResult Index()
+    public IActionResult Index()
     {
         return View();
     }
