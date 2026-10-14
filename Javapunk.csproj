@@ -18,5 +18,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  
+<ItemGroup>
+    <Compile Remove="Javapunk.Tests/**/*.cs" />
+</ItemGroup>
 
 </Project>

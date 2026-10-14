@@ -22,7 +22,7 @@ namespace Javapunk.Models
             {
 
                 var questions = await _context.Questions
-                .Where(q => q.Modules.Id == moduleId)
+                .Where(q => q.Modules != null && q.Modules.Id == moduleId)
                 .Include(q => q.Answers)
                 .ToListAsync();
 
