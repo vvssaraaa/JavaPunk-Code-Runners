@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Http
 @model List<Javapunk.Models.Modules>
 
 @{
@@ -6,6 +7,13 @@
 
 <div class="container main-box centered">
     <h2>Choose a module!</h2>
+
+    @if (Context.Session.GetString("IsAdmin") == "true")
+    {
+        <div class="text-success">You are logged in as admin.</div>
+        <a class="btn btn-secondary" asp-action="Create">Add new module</a>
+        <a class="btn btn-secondary" asp-controller="Admin" asp-action="Logout">Logout</a>
+    }
 
     @foreach (var module in Model)
     {

@@ -11,6 +11,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
     builder.Configuration.GetConnectionString("programDb")));
 builder.Services.AddScoped<QuizService>();
 builder.Services.AddScoped<UserService>();
+//Sessions for admin login
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -25,6 +29,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthorization();
 
 app.MapStaticAssets();
