@@ -12,6 +12,9 @@ public class Users
     public string User_name { get; set; } = string.Empty;
     [DefaultValue(0)]
     public int User_score { get; set; }
+
+    [Required]
+    public string User_password { get; set; } = string.Empty;
 }
 
 public class Modules

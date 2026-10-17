@@ -14,7 +14,7 @@ namespace Javapunk.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.13");
 
             modelBuilder.Entity("Javapunk.Models.Answers", b =>
                 {
@@ -102,6 +102,10 @@ namespace Javapunk.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("User_name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("User_password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
