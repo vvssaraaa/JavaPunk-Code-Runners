@@ -4,6 +4,15 @@
 
 <div class="container main-box main-menu-container centered">
     <h1>Main Menu</h1>
+    @if (Context.Session.GetString("IsLoggedIn") == "true")
+    {
+        <div class="text-success">You are logged in as @Context.Session.GetString("User_name").</div>
+    }
+    else
+    {
+        <p>You are not logged in, and your progress will not be saved. Click the button below to be redirected to the log in page.</p>
+        <a class="btn btn-secondary" asp-controller="Login" asp-action="Index">Log in</a>
+    }
     <a asp-controller="Modules" asp-action="Index" class="btn btn-primary optionbtn">Modules</a>
     <button disabled="true" class="btn btn-primary optionbtn">Exam (WIP)</button>
     <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>

@@ -15,7 +15,7 @@ namespace Javapunk.Models
         }
         //Creates a new user. Validates that the username isn't empty and is a reasonable length, then checks it isn't already taken. 
         //New users start with a score of 0.
-        public async Task<Users?> CreateUser(string username)
+        public async Task<Users?> CreateUser(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || username.Length < 3 || username.Length > 20)
             {
@@ -30,6 +30,7 @@ namespace Javapunk.Models
                 Users user = new Users();
                 user.User_name = username;
                 user.User_score = 0;
+                user.User_password = password;
 
                 _context.Add(user);
 
@@ -65,6 +66,19 @@ namespace Javapunk.Models
             {
                 _logger.LogError(e, "Failed to add score to user score");
                 return false;
+            }
+        }
+        public async Task<Users?> GetUserWithUserName(String username)
+        {
+            try
+            {
+                Users? user = await _context.Users.FirstOrDefaultAsync(u => u.User_name == username);
+                return user;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to check if user exists");
+                return null;
             }
         }
     }

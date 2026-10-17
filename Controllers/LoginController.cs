@@ -1,15 +1,71 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using Javapunk.Data;
 using Javapunk.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Javapunk.Controllers;
 
 public class LoginController : Controller
 {
+    private readonly UserService _userService;
+
+    public LoginController(UserService userService)
+    {
+        _userService = userService;
+    }
+   
     public IActionResult Index()
     {
         return View();
     }
+
+    public IActionResult LoginPage()
+    {
+        return View();
+    }
+    public IActionResult RegisterPage()
+    {
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Login(string username, string password)
+    {
+        Users? user = await _userService.GetUserWithUserName(username);
+        if (user == null)
+        {
+            ViewBag.ErrorMessage = "Invalid username or password.";
+            return View("LoginPage");
+        }
+        // Check if the username and password are correct
+        if (password == user.User_password)
+        {
+            // Set a session variable to indicate that the user is logged in
+            HttpContext.Session.SetString("IsLoggedIn", "true");
+            HttpContext.Session.SetString("User_name", user.User_name);
+            return RedirectToAction("Index", "Menu");
+        }
+        // If the login fails, display an error message
+        ViewBag.ErrorMessage = "Invalid username or password.";
+        return View("LoginPage");
+    }
+    [HttpPost]
+    public async Task<IActionResult> RegisterUser(string username, string password)
+    {
+        Users? user = await _userService.GetUserWithUserName(username);
+        if (user != null)
+        {
+            ViewBag.ErrorMessage = "User with this name already exists.";
+            return View("RegisterPage");
+        }
+        else
+        {
+            await _userService.CreateUser(username, password);
+            HttpContext.Session.SetString("IsLoggedIn", "true");
+            HttpContext.Session.SetString("User_name", username);
+            return RedirectToAction("Index", "Menu");
+        };
+    } 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

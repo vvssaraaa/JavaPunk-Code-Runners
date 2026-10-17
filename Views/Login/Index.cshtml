@@ -3,11 +3,7 @@
 }
 
 <div class="container main-box centered">
-    <label for="uname">Username:</label>
-    <input type="text" id="uname" name="uname"><br><br>
-    <label for="pwd">Password:</label>
-    <input type="text" id="pwd" name="Pwd"><br><br>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary">LOG IN</a>
+    <a asp-controller="Login" asp-action="LoginPage" class="btn btn-primary">LOG IN</a>
     <p>or...</p>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary">CREATE USER</a>
+    <a asp-controller="Login" asp-action="RegisterPage" class="btn btn-primary">CREATE USER</a>
 </div>
