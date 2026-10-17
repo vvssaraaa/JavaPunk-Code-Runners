@@ -45,7 +45,7 @@ namespace Javapunk.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ModulesId")
+                    b.Property<int?>("ModulesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("UsersId")
@@ -81,7 +81,7 @@ namespace Javapunk.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ModulesId")
+                    b.Property<int?>("ModulesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Question_text")
@@ -116,7 +116,7 @@ namespace Javapunk.Migrations
             modelBuilder.Entity("Javapunk.Models.Answers", b =>
                 {
                     b.HasOne("Javapunk.Models.Questions", "Questions")
-                        .WithMany()
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,9 +128,7 @@ namespace Javapunk.Migrations
                 {
                     b.HasOne("Javapunk.Models.Modules", "Modules")
                         .WithMany()
-                        .HasForeignKey("ModulesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModulesId");
 
                     b.HasOne("Javapunk.Models.Users", "Users")
                         .WithMany()
@@ -147,11 +145,14 @@ namespace Javapunk.Migrations
                 {
                     b.HasOne("Javapunk.Models.Modules", "Modules")
                         .WithMany()
-                        .HasForeignKey("ModulesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModulesId");
 
                     b.Navigation("Modules");
+                });
+
+            modelBuilder.Entity("Javapunk.Models.Questions", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }
