@@ -24,7 +24,7 @@ public class UserServiceTests{
         var logger = NullLogger<UserService>.Instance;
         var service = new UserService(context, logger);
 
-        var result = await service.CreateUser("TestUser");
+        var result = await service.CreateUser("TestUser","TestPassword");
 
         Assert.NotNull(result);
         Assert.Equal("TestUser", result.User_name);
@@ -41,7 +41,7 @@ public class UserServiceTests{
         var logger = NullLogger<UserService>.Instance;
         var service = new UserService(context, logger);
 
-        var result = await service.CreateUser("TestUser");
+        var result = await service.CreateUser("TestUser", "TestPassword");
 
         Assert.NotNull(result);
         Assert.Equal(0, result.User_score);
@@ -103,7 +103,7 @@ public class UserServiceTests{
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        var newUser = await service.CreateUser("TestUser");
+        var newUser = await service.CreateUser("TestUser", "TestPassword");
 
         Assert.Null(newUser);
         Assert.Single(context.Users);
@@ -117,7 +117,7 @@ public class UserServiceTests{
         var logger = NullLogger<UserService>.Instance;
         var service = new UserService(context, logger);
 
-        var newUser = await service.CreateUser("hi");
+        var newUser = await service.CreateUser("hi", "TestPassword");
 
         Assert.Null(newUser);
         Assert.Empty(context.Users);
