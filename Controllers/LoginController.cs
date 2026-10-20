@@ -43,6 +43,7 @@ public class LoginController : Controller
             // Set a session variable to indicate that the user is logged in
             HttpContext.Session.SetString("IsLoggedIn", "true");
             HttpContext.Session.SetString("User_name", user.User_name);
+            HttpContext.Session.SetInt32("UserId", user.Id);
             return RedirectToAction("Index", "Menu");
         }
         // If the login fails, display an error message
@@ -52,17 +53,22 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> RegisterUser(string username, string password)
     {
-        Users? user = await _userService.GetUserWithUserName(username);
-        if (user != null)
+        if(await _userService.GetUserWithUserName(username) != null)
         {
             ViewBag.ErrorMessage = "User with this name already exists.";
             return View("RegisterPage");
         }
+        Users? newUser = await _userService.CreateUser(username, password);
+        if (newUser == null)
+        {
+            ViewBag.ErrorMessage = "Could not create user";
+            return View("RegisterPage");
+        }
         else
         {
-            await _userService.CreateUser(username, password);
             HttpContext.Session.SetString("IsLoggedIn", "true");
-            HttpContext.Session.SetString("User_name", username);
+            HttpContext.Session.SetString("User_name", newUser.User_name);
+            HttpContext.Session.SetInt32("UserId", newUser.Id);
             return RedirectToAction("Index", "Menu");
         };
     } 

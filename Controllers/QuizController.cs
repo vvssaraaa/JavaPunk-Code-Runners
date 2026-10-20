@@ -20,8 +20,13 @@ public class QuizController : Controller
     //starts a quiz for a specific module, gets questions and redirects them to the first one. 
     //no state is saved, everything is passed through the redirects. 
     [HttpGet]
-    public async Task<IActionResult> Start(int moduleId, int userId)
+    public async Task<IActionResult> Start(int moduleId)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+        {
+            return RedirectToAction("LoginPage", "Login");
+        }
         var questions = await _quizService.GetQuizQuestionsAsync(moduleId);
 
         if (questions.Count == 0)
@@ -30,12 +35,17 @@ public class QuizController : Controller
         }
         string questionIds = string.Join(",", questions.Select(q => q.Id));
 
-        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId });
+        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId = userId.Value });
     }
 
     [HttpGet]
-    public async Task<IActionResult> StartExam(int userId)
+    public async Task<IActionResult> StartExam()
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+        {
+            return RedirectToAction("LoginPage", "Login");
+        }
 
         var exam = await _quizService.CreateExamAsync();
 
@@ -46,7 +56,7 @@ public class QuizController : Controller
 
         string questionIds = string.Join(",", exam.Select(q => q.Id));
 
-        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId });
+        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId = userId.Value});
     }
 
     //shows which question the user is currently on and passes the current score and userId to the view. 
@@ -57,7 +67,7 @@ public class QuizController : Controller
 
         if (currentIndex >= questionIdList.Count)
         {
-            return RedirectToAction("Result", new { score, userId });
+            return RedirectToAction("Result", new { score});
         }
 
         int currentId = questionIdList[currentIndex];
@@ -90,18 +100,28 @@ public class QuizController : Controller
         {
             score += 10;
         }
+
+        if (currentIndex + 1 >= questionIdList.Count)
+        {
+            int? sessionUserId = HttpContext.Session.GetInt32("UserId");
+            if (sessionUserId != null)
+            {
+                await _userService.AddScoreToUserScore(sessionUserId.Value, score);
+            }
+        }
         return RedirectToAction("Question", new { questionIds, currentIndex = currentIndex + 1, score, userId });
     }
+
     //saves the runs final score to the user total and shows it. 
     [HttpGet]
-    public async Task<IActionResult> Result(int userId, int score)
+    public async Task<IActionResult> Result(int score)
     {
-        bool success = await _userService.AddScoreToUserScore(userId, score);
-
-        if (!success)
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
         {
             return NotFound("Could not save the user's score.");
         }
+
         ViewBag.UserId = userId;
         ViewBag.Score = score;
 
