@@ -4,7 +4,7 @@
    ViewData["Title"] = "Question";
 }
 
-
+<div class="modulesAndQuiz">
 <div class="container main-box">
 <h2>@Model.Question_text</h2>
 
@@ -18,12 +18,13 @@
     @foreach (var answer in Model.Answers)
     {
         <div>
-            <label>
+            <label class="quiz-answer">
                 <input type="radio" name="answerId" value="@answer.Id" required />
                 @answer.Answer_text 
             </label>
         </div>
     }
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-secondary-custom">Submit</button>
 </form>
+</div>
 </div>

@@ -1,11 +1,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<div class="modulesAndQuiz">
 <div class="container main-box centered">
     <h1>Question options</h1>
     <a asp-controller="Questions" asp-action="Create" class="btn btn-primary optionbtn">Make your own question!</a>
     <a asp-controller="Questions" asp-action="EditList" class="btn btn-primary optionbtn">Edit questions</a>
     <a asp-controller="Questions" asp-action="DeleteIndex" class="btn btn-primary optionbtn">Delete questions</a>
     <a asp-controller="Menu" asp-action="Index" class="btn btn-primary optionbtn">Back to main menu</a>
+</div>
 </div>
