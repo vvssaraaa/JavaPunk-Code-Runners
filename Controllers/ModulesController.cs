@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Javapunk.Data;
+using Javapunk.Models;
 
 namespace Javapunk.Controllers;
 
@@ -11,6 +12,12 @@ public class ModulesController : Controller
     public ModulesController(ApplicationDbContext context)
     {
         _context = context;
+    }
+
+    //Hjelpemetode for å sjekke om brukeren er logget inn som admin
+    private bool IsAdmin()
+    {
+        return HttpContext.Session.GetString("IsAdmin") == "true";
     }
     public IActionResult Index()
     {
@@ -25,5 +32,28 @@ public class ModulesController : Controller
         ViewBag.UserId = userId;
 
         return View(modules);
+    }
+
+    public IActionResult Create()
+    {
+        if (!IsAdmin())
+            return RedirectToAction("Login", "Admin");
+
+        return View();
+    }
+
+    [HttpPost]
+    
+    public async Task<IActionResult> Create(Modules module)
+    {
+        if (!IsAdmin())
+            return RedirectToAction("Login", "Admin");
+
+        if (!ModelState.IsValid)
+            return View(module);
+
+        _context.Modules.Add(module);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }
