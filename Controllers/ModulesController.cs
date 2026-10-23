@@ -27,10 +27,11 @@ public class ModulesController : Controller
     [HttpGet]
     public async Task<ActionResult> Index(int userId)
     {
-        var modules = await _context.Modules.ToListAsync();
-
+       
         ViewBag.UserId = userId;
+        ViewBag.IsAdmin = IsAdmin();
 
+        var modules = await _context.Modules.ToListAsync();
         return View(modules);
     }
 
@@ -77,5 +78,32 @@ public class ModulesController : Controller
             return NotFound();
 
         return View(module);
+    }
+
+    //Disse funksjonene er for å slette moduler fra databasen
+    //Her returneres et view så admin kan velge hvilken modul som skal slettes
+    [HttpGet]
+    public async Task<IActionResult> DeleteIndex()
+    {
+        if (!IsAdmin())
+            return RedirectToAction("Login", "Admin");
+
+        var modules = await _context.Modules.ToListAsync();
+        return View(modules);
+    }
+
+    //Her slettes modulen fra databasen, basert på id
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (!IsAdmin())
+            return RedirectToAction("Login", "Admin");
+            
+        var moduleForDeletion = await _context.Modules.FindAsync(id)
+            ?? throw new Exception($"Module with ID {id} does not exist.");
+
+        _context.Modules.Remove(moduleForDeletion);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(DeleteIndex));
     }
 }

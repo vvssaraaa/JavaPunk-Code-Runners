@@ -1,0 +1,15 @@
+@model List <Javapunk.Models.Modules>
+
+    <div class="module-container">
+        <h2>Delete Modules</h2>
+
+        @foreach (var module in Model)
+        {
+            <p>
+                @module.Module_name
+                <a class="btn btn-danger"
+                    asp-action="Delete"
+                    asp-route-id="@module.Id">Delete</a>
+            </p>
+        }
+    </div>
