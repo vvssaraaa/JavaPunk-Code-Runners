@@ -56,4 +56,26 @@ public class ModulesController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
+    //Endre på moduler
+    public async Task<IActionResult> EditList()
+    {
+        var modules = await _context.Modules.ToListAsync();
+        return View(modules);
+    }
+
+    public IActionResult Edit(int id)
+    {
+        if (!IsAdmin())
+            return RedirectToAction("Login", "Admin");
+
+        var module = _context.Modules
+            .Where(m => m.Id == id)
+            .ToList().FirstOrDefault();
+
+        if (module == null)
+            return NotFound();
+
+        return View(module);
+    }
 }
