@@ -15,7 +15,7 @@ public class AdminController : Controller
         if (password == "admin123")
         {
             HttpContext.Session.SetString("IsAdmin", "true");
-            return RedirectToAction("Index", "Modules");
+            return RedirectToAction("Index", "Menu");
         }
 
         ViewBag.Error = "Incorrect password. Please try again.";

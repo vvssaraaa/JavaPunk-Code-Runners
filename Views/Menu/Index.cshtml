@@ -15,4 +15,9 @@
     <a asp-controller="Modules" asp-action="Index" class="btn btn-primary optionbtn">Modules</a>
     <a asp-controller="Quiz" asp-action="StartExam" class="btn btn-primary optionbtn">Exam</a>
     <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>
+
+    @if (ViewBag.IsAdmin == true)
+    {
+        <a asp-controller="Modules" asp-action="Index" class="btn btn-primary optionbtn">Edit modules</a>
+    }
 </div>

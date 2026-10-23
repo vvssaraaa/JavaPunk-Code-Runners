@@ -25,7 +25,7 @@ public class ModulesController : Controller
     }
     // Loads all modules from the database and passes them to the view, along with the current user's ID
     [HttpGet]
-    public async Task<ActionResult> Index(int userId)
+    public async Task<ActionResult> Index(int userId = 0)
     {
        
         ViewBag.UserId = userId;
