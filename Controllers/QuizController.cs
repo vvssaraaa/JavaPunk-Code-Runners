@@ -59,9 +59,9 @@ public class QuizController : Controller
         return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId = userId.Value});
     }
 
-    //shows which question the user is currently on and passes the current score and userId to the view. 
+    // Displays the current question based on the index and questionIds passed through the query string.
     [HttpGet]
-    public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId)
+    public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId, bool isAnswered, int? selectedAnswerId)
     {
         List<int> questionIdList = questionIds.Split(",").Select(int.Parse).ToList();
 
@@ -79,14 +79,56 @@ public class QuizController : Controller
             return NotFound("Question was not found");
         }
 
+        ViewBag.IsLastQuestion = false;
+        if (currentIndex + 1 == questionIdList.Count)
+        {
+            ViewBag.IsLastQuestion = true;
+        }
+
         ViewBag.QuestionIds = questionIds;
         ViewBag.CurrentIndex = currentIndex;
         ViewBag.Score = score;
         ViewBag.UserId = userId;
+        ViewBag.IsAnswered = isAnswered;
+        ViewBag.SelectedAnswerId = selectedAnswerId;
 
         return View(question);
     }
-    //checks the answer and updates the score if correct, then redirects to the next question. 
+
+    [HttpGet]
+    public async Task<IActionResult> RevealAnswers(string questionIds, int currentIndex, int score, int userId, int answerId)
+    {
+        List<int> questionIdList = questionIds.Split(",").Select(int.Parse).ToList();
+
+        if (currentIndex >= questionIdList.Count)
+        {
+            return RedirectToAction("Result", new { score });
+        }
+
+        int currentId = questionIdList[currentIndex];
+
+        var question = await _quizService.GetQuestionByIdAsync(currentId);
+
+        if (question == null)
+        {
+            return NotFound("Question was not found");
+        }
+
+        return RedirectToAction("Question", new { questionIds, currentIndex, score, userId, isAnswered = true, selectedAnswerId = answerId });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> NextQuestion(string questionIds, int currentIndex, int score, int userId)
+    {
+        List<int> questionIdList = questionIds.Split(",").Select(int.Parse).ToList();
+        if (currentIndex + 1 >= questionIdList.Count)
+        {
+            return RedirectToAction("Result", new { score });
+        }
+        return RedirectToAction("Question", new { questionIds, currentIndex = currentIndex + 1, score, userId });
+    }
+
+    //checks the answer and updates the score if correct, then reveals answers. 
     [HttpPost]
     public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId, int answerId)
     {
@@ -109,7 +151,7 @@ public class QuizController : Controller
                 await _userService.AddScoreToUserScore(sessionUserId.Value, score);
             }
         }
-        return RedirectToAction("Question", new { questionIds, currentIndex = currentIndex + 1, score, userId });
+        return RedirectToAction("RevealAnswers", new { questionIds, currentIndex, score, userId, answerId });
     }
 
     //saves the runs final score to the user total and shows it. 
