@@ -56,7 +56,7 @@ public class QuizController : Controller
 
         string questionIds = string.Join(",", exam.Select(q => q.Id));
 
-        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId = userId.Value});
+        return RedirectToAction("Question", new { questionIds, currentIndex = 0, score = 0, userId = userId.Value });
     }
 
     // Displays the current question based on the index and questionIds passed through the query string.
@@ -67,7 +67,7 @@ public class QuizController : Controller
 
         if (currentIndex >= questionIdList.Count)
         {
-            return RedirectToAction("Result", new { score});
+            return RedirectToAction("Result", new { score });
         }
 
         int currentId = questionIdList[currentIndex];

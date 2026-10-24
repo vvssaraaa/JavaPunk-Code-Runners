@@ -20,7 +20,6 @@ namespace Javapunk.Models
         {
             try
             {
-
                 var questions = await _context.Questions
                 .Where(q => q.Modules != null && q.Modules.Id == moduleId)
                 .Include(q => q.Answers)

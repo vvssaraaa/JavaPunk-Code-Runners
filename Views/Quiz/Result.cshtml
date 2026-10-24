@@ -3,18 +3,18 @@
 }
 
 <div class="modulesAndQuiz">
-<div class="container main-box centered quiz-finished">
-<h2>Quiz complete!</h2>
+    <div class="container main-box centered quiz-finished">
+        <h2>Quiz complete!</h2>
 
-<p>Your score: @ViewBag.Score</p>
+        <p>Your score: @ViewBag.Score</p>
 
-<div class="question-actions">
-   <a class="btn btn-secondary-custom"
-   asp-controller="Modules"
-   asp-action="Index"
-   asp-route-userId="@ViewBag.UserId">
-   Back to modules
-   </a>
-</div>
-</div>
+        <div class="question-actions">
+            <a class="btn btn-secondary-custom"
+               asp-controller="Modules"
+               asp-action="Index"
+               asp-route-userId="@ViewBag.UserId">
+                Back to modules
+            </a>
+        </div>
+    </div>
 </div>

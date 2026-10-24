@@ -6,28 +6,28 @@
 }
 
 <div class="modulesAndQuiz">
-<div class="container main-box">
-    <h2>Delete Question</h2>
-        <div class="form-group">            
-                <ul class="question-list">
-    @foreach (QuestionViewModel question in Model)
-    {
-        <li class="question-item">
-            <p>@question.QuestionText</p>
+    <div class="container main-box">
+        <h2>Delete Question</h2>
+        <div class="form-group">
+            <ul class="question-list">
+                @foreach (QuestionViewModel question in Model)
+                {
+                    <li class="question-item">
+                        <p>@question.QuestionText</p>
 
-            <a class="btn btn-secondary-custom"
-               asp-controller="Questions"
-               asp-action="Delete"
-               asp-route-id="@question.QuestionId">
-                Delete
-            </a>
-        </li>
-    }
-</ul>
+                        <a class="btn btn-secondary-custom"
+                           asp-controller="Questions"
+                           asp-action="Delete"
+                           asp-route-id="@question.QuestionId">
+                            Delete
+                        </a>
+                    </li>
+                }
+            </ul>
 
-    <div class="question-actions">
-    <a class="btn btn-primary"
-       asp-controller="Questions"
-       asp-action="Index">Back to options</a>
-    </div>
-</div>
+            <div class="question-actions">
+                <a class="btn btn-primary"
+                   asp-controller="Questions"
+                   asp-action="Index">Back to options</a>
+            </div>
+        </div>

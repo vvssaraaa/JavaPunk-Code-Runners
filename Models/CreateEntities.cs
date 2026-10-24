@@ -22,7 +22,7 @@ public class Modules
     [Key]
     public int Id { get; set; }
     [Required]
-    public string Module_name { get; set;} = string.Empty;
+    public string Module_name { get; set; } = string.Empty;
 }
 
 public class Questions
@@ -40,7 +40,7 @@ public class Answers
 {
     [Key]
     public int Id { get; set; }
-    public Questions Questions { get; set;} = null!;
+    public Questions Questions { get; set; } = null!;
     [Required]
     public bool Is_correct { get; set; }
     [Required]

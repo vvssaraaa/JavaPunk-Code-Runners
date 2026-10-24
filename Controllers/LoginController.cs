@@ -14,7 +14,7 @@ public class LoginController : Controller
     {
         _userService = userService;
     }
-   
+
     public IActionResult Index()
     {
         return View();
@@ -53,7 +53,7 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> RegisterUser(string username, string password)
     {
-        if(await _userService.GetUserWithUserName(username) != null)
+        if (await _userService.GetUserWithUserName(username) != null)
         {
             ViewBag.ErrorMessage = "User with this name already exists.";
             return View("RegisterPage");
@@ -70,8 +70,9 @@ public class LoginController : Controller
             HttpContext.Session.SetString("User_name", newUser.User_name);
             HttpContext.Session.SetInt32("UserId", newUser.Id);
             return RedirectToAction("Index", "Menu");
-        };
-    } 
+        }
+        ;
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

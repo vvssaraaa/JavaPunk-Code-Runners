@@ -1,47 +1,44 @@
 @model Javapunk.Models.Questions
 
 @{
-   ViewData["Title"] = "Question";
+    ViewData["Title"] = "Question";
 }
-
 <div class="modulesAndQuiz">
-<div class="container main-box">
-<h2>@Model.Question_text</h2>
-
-<form method="post" asp-controller="Quiz" asp-action="Question">
-        @{
-                bool isAnswered = ViewBag.IsAnswered; 
+    <div class="container main-box">
+        <h2>@Model.Question_text</h2>
+        <form method="post" asp-controller="Quiz" asp-action="Question">
+            @{
+                bool isAnswered = ViewBag.IsAnswered;
             }
-    <input type="hidden" name="questionIds" value="@ViewBag.QuestionIds" />
-    <input type="hidden" name="currentIndex" value="@ViewBag.CurrentIndex" />
-    <input type="hidden" name="score" value="@ViewBag.Score" />
-    <input type="hidden" name="userId" value="@ViewBag.UserId" />
-    @foreach (var answer in Model.Answers)
-    {
-        <div>
+            <input type="hidden" name="questionIds" value="@ViewBag.QuestionIds" />
+            <input type="hidden" name="currentIndex" value="@ViewBag.CurrentIndex" />
+            <input type="hidden" name="score" value="@ViewBag.Score" />
+            <input type="hidden" name="userId" value="@ViewBag.UserId" />
+            @foreach (var answer in Model.Answers)
+            {
+                <div>
 
-            <label class="quiz-answer" style="@(isAnswered ? $"background-color:{(answer.Is_correct ? "green" : "red")}" : null)">
-                <input type="radio" name="answerId" value="@answer.Id" checked="@(ViewBag.SelectedAnswerId == answer.Id)" required disabled="@isAnswered"/>
-                @answer.Answer_text 
-            </label>
+                    <label class="quiz-answer" style="@(isAnswered ? $"background-color:{(answer.Is_correct ? "green" : "red")}" : null)">
+                        <input type="radio" name="answerId" value="@answer.Id" checked="@(ViewBag.SelectedAnswerId == answer.Id)" required disabled="@isAnswered" />
+                        @answer.Answer_text
+                    </label>
                 </div>
-                                    
-    }
-        @if (isAnswered)
-        {
-                    @if (ViewBag.IsLastQuestion)
-                    {
+            }
+            @if (isAnswered)
+            {
+                @if (ViewBag.IsLastQuestion)
+                {
                     <button asp-action="NextQuestion" type="submit" class="btn btn-secondary-custom">Finish Quiz</button>
-
-                    } else
-                    {
-                                            <button asp-action="NextQuestion" type="submit" class="btn btn-secondary-custom">Next Question</button>
-
-                    }
-        }
-        else {
+                }
+                else
+                {
+                    <button asp-action="NextQuestion" type="submit" class="btn btn-secondary-custom">Next Question</button>
+                }
+            }
+            else
+            {
                 <button type="submit" class="btn btn-secondary-custom">Submit</button>
-        }
-    </form>
-</div>
+            }
+        </form>
+    </div>
 </div>

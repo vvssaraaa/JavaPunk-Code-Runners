@@ -27,7 +27,7 @@ public class ModulesController : Controller
     [HttpGet]
     public async Task<ActionResult> Index(int userId = 0)
     {
-       
+
         ViewBag.UserId = userId;
         ViewBag.IsAdmin = IsAdmin();
 
@@ -44,7 +44,7 @@ public class ModulesController : Controller
     }
 
     [HttpPost]
-    
+
     public async Task<IActionResult> Create(Modules module)
     {
         if (!IsAdmin())
@@ -98,7 +98,7 @@ public class ModulesController : Controller
     {
         if (!IsAdmin())
             return RedirectToAction("Login", "Admin");
-            
+
         var moduleForDeletion = await _context.Modules.FindAsync(id)
             ?? throw new Exception($"Module with ID {id} does not exist.");
 
