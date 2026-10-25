@@ -8,6 +8,7 @@ public class MenuController : Controller
 {
     public IActionResult Index()
     {
+        ViewBag.IsAdmin = HttpContext.Session.GetString("IsAdmin") == "true";
         return View();
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
