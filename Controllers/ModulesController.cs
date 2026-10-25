@@ -34,6 +34,11 @@ public class ModulesController : Controller
         var modules = await _context.Modules.ToListAsync();
         return View(modules);
     }
+    public IActionResult AdminView()
+    {
+        ViewBag.IsAdmin = HttpContext.Session.GetString("IsAdmin") == "true";
+        return View();
+    }
 
     public IActionResult Create()
     {
