@@ -12,7 +12,7 @@
         <p>You are not logged in, and your progress will not be saved. Click the button below to be redirected to the log in page.</p>
         <a class="btn btn-secondary" asp-controller="Login" asp-action="Index">Log in</a>
     }
-    <a asp-controller="Modules" asp-action="Index" class="btn btn-primary optionbtn">Modules</a>
+    <a asp-controller="Modules" asp-action="Index" asp-route-userId="@Context.Session.GetInt32("UserId")" class="btn btn-primary optionbtn">Modules</a>
     <a asp-controller="Quiz" asp-action="StartExam" class="btn btn-primary optionbtn">Exam</a>
     <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>
 

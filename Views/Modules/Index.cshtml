@@ -16,11 +16,12 @@
         <div class="module-path">
             @foreach (var module in Model)
             {
-                <a class="btn btn-primary module-button"
+                <a class="btn btn-primary module-button @(ViewBag.LastCompletedModule + 1 < module.Id ? "disabled" : "")"
                    asp-controller="Quiz"
                    asp-action="Start"
                    asp-route-moduleId="@module.Id"
-                   asp-route-userId="@ViewBag.UserId">
+                   asp-route-userId="@ViewBag.UserId"                   
+                >
                     @module.Module_name
                 </a>
             }

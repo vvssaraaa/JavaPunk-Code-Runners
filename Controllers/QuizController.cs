@@ -29,6 +29,8 @@ public class QuizController : Controller
         }
         var questions = await _quizService.GetQuizQuestionsAsync(moduleId);
 
+        HttpContext.Session.SetInt32("ModuleId", moduleId);
+
         if (questions.Count == 0)
         {
             return NotFound("No questions found for this module");
@@ -149,6 +151,11 @@ public class QuizController : Controller
             if (sessionUserId != null)
             {
                 await _userService.AddScoreToUserScore(sessionUserId.Value, score);
+                int? moduleId = HttpContext.Session.GetInt32("ModuleId");
+                if (score >= 60 && moduleId != null)
+                {
+                    await _userService.MarkModuleComplete(sessionUserId.Value, moduleId.Value);
+                }
             }
         }
         return RedirectToAction("RevealAnswers", new { questionIds, currentIndex, score, userId, answerId });
