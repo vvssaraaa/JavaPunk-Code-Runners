@@ -1,12 +1,21 @@
 @model List<Javapunk.Models.Modules>
 
 @{
-    ViewData["Title"] = "EditList";
+    ViewData["Title"] = "Modules";
 }
 
 <div class="modulesAndQuiz">
     <div class="container main-box">
-        <h2>Edit Module</h2>
+        <h2>Modules</h2>
+
+        <p>
+            <a class="btn btn-primary"
+               asp-controller="AdminModules"
+               asp-action="Create">
+                Create New
+            </a>
+        </p>
+
         <div class="form-group">
             <ul class="question-list">
                 @foreach (var module in Model)
@@ -15,10 +24,17 @@
                         <p>@module.Module_name</p>
 
                         <a class="btn btn-secondary-custom"
-                           asp-controller="Modules"
+                           asp-controller="AdminModules"
                            asp-action="Edit"
                            asp-route-id="@module.Id">
                             Edit
+                        </a>
+
+                        <a class="btn btn-secondary-custom"
+                           asp-controller="AdminModules"
+                           asp-action="Delete"
+                           asp-route-id="@module.Id">
+                            Delete
                         </a>
                     </li>
                 }
@@ -26,8 +42,8 @@
 
             <div class="question-actions">
                 <a class="btn btn-primary"
-                   asp-controller="Modules"
-                   asp-action="Index">
+                   asp-controller="Admin"
+                   asp-action="Login">
                     Back to options
                 </a>
             </div>
