@@ -105,6 +105,21 @@ body.no-blur::before {
   color: #F0E8FF;
 }
 
+.text-success-custom {
+    color: #E3DC9D;
+}
+
+.log-in-success {
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background-color: #3E3658CC;
+    border: 1px solid #A995FF;
+    border-radius: 8px;
+}
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);

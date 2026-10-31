@@ -50,6 +50,15 @@ public class LoginController : Controller
         ViewBag.ErrorMessage = "Invalid username or password.";
         return View("LoginPage");
     }
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Remove("IsLoggedIn");
+        HttpContext.Session.Remove("User_name");
+        HttpContext.Session.Remove("UserId");
+        return RedirectToAction("Index", "Home");
+    }
+
     [HttpPost]
     public async Task<IActionResult> RegisterUser(string username, string password)
     {

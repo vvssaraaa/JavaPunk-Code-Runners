@@ -15,7 +15,8 @@ public class AdminController : Controller
         if (password == "admin123")
         {
             HttpContext.Session.SetString("IsAdmin", "true");
-            return RedirectToAction("Index", "AdminModules");
+            HttpContext.Session.SetString("IsLoggedIn", "true");
+            return RedirectToAction("Index", "Menu");
         }
 
         ViewBag.Error = "Incorrect password. Please try again.";
@@ -25,6 +26,7 @@ public class AdminController : Controller
     public IActionResult Logout()
     {
         HttpContext.Session.Remove("IsAdmin");
-        return RedirectToAction("Index", "Modules");
+        HttpContext.Session.SetString("IsLoggedIn", "false");
+        return RedirectToAction("Index", "Home");
     }
 }

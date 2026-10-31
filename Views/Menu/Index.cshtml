@@ -5,7 +5,21 @@
     <h1>Main Menu</h1>
     @if (Context.Session.GetString("IsLoggedIn") == "true")
     {
-        <div class="text-success">You are logged in as @Context.Session.GetString("User_name").</div>
+        <div class="log-in-success">
+        @if (Context.Session.GetString("IsAdmin") == "true")
+
+        {
+             <div class="text-success-custom"> You are logged in as admin.</div>
+             <a class="btn btn-secondary-custom" asp-controller="Admin" asp-action="Logout">Log out</a>
+
+        }
+        else
+        {
+            <div class="text-success-custom">You are logged in as @Context.Session.GetString("User_name").</div>
+            <a class="btn btn-secondary-custom" asp-controller="Login" asp-action="Logout">Log out</a>
+
+        }
+        </div>
     }
     else
     {
@@ -14,10 +28,11 @@
     }
     <a asp-controller="Modules" asp-action="Index" asp-route-userId="@Context.Session.GetInt32("UserId")" class="btn btn-primary optionbtn">Modules</a>
     <a asp-controller="Quiz" asp-action="StartExam" class="btn btn-primary optionbtn">Exam</a>
-    <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>
+
 
     @if (ViewBag.IsAdmin == true)
     {
-        <a asp-controller="Modules" asp-action="AdminView" class="btn btn-primary optionbtn">Edit modules</a>
+        <a asp-controller="AdminModules" asp-action="Index" class="btn btn-primary optionbtn">Module options</a>
+        <a asp-controller="Questions" asp-action="Index" class="btn btn-primary optionbtn">Question options</a>
     }
 </div>
