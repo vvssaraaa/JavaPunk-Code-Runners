@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Javapunk.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace Javapunk.Controllers;
 
@@ -86,7 +87,6 @@ public class QuizController : Controller
         {
             ViewBag.IsLastQuestion = true;
         }
-
         ViewBag.QuestionIds = questionIds;
         ViewBag.CurrentIndex = currentIndex;
         ViewBag.Score = score;
@@ -130,6 +130,18 @@ public class QuizController : Controller
         return RedirectToAction("Question", new { questionIds, currentIndex = currentIndex + 1, score, userId });
     }
 
+    [HttpPost]
+    public async Task<IActionResult> NextModule()
+    {
+        int? currentModule = HttpContext.Session.GetInt32("ModuleId");
+        if (currentModule == null)
+        {
+            return NotFound("Question was not found");
+        }
+        int nextModuleId = currentModule.Value + 1;
+        return RedirectToAction("Start", new { moduleId = nextModuleId });
+    }
+
     //checks the answer and updates the score if correct, then reveals answers. 
     [HttpPost]
     public async Task<IActionResult> Question(string questionIds, int currentIndex, int score, int userId, int answerId)
@@ -170,7 +182,6 @@ public class QuizController : Controller
         {
             return NotFound("Could not save the user's score.");
         }
-
         ViewBag.UserId = userId;
         ViewBag.Score = score;
 

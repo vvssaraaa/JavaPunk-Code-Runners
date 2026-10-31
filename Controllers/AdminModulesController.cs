@@ -4,6 +4,7 @@ using Javapunk.Data;
 using Javapunk.Models;
 
 namespace Javapunk.Controllers;
+
 public class AdminModulesController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -69,7 +70,7 @@ public class AdminModulesController : Controller
 
         if (id != module.Id)
             return NotFound();
-            
+
         if (ModelState.IsValid)
         {
             _context.Modules.Update(module);
@@ -77,7 +78,7 @@ public class AdminModulesController : Controller
             return RedirectToAction(nameof(Index));
         }
         return View(module);
-    } 
+    }
 
     public async Task<IActionResult> Delete(int id)
     {
@@ -87,7 +88,7 @@ public class AdminModulesController : Controller
         var module = await _context.Modules.FindAsync(id);
         if (module == null)
             return NotFound();
-    
+
         return View(module);
     }
 

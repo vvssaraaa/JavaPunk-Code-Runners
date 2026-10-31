@@ -1,13 +1,12 @@
-:root{
+:root {
     --button-primary-bg: #2A143D;
-  --button-primary-hover: #47195D;
-  --button-primary-text: #F7E40F;
-  --button-primary-border: #47195D;
-
-  --button-secondary-bg: #47195D;
-  --button-secondary-hover: #9e2d9e;
-  --button-secondary-text: #d651d6;
-  --button-secondary-border: #9e2d9e;
+    --button-primary-hover: #47195D;
+    --button-primary-text: #F7E40F;
+    --button-primary-border: #47195D;
+    --button-secondary-bg: #47195D;
+    --button-secondary-hover: #9e2d9e;
+    --button-secondary-text: #d651d6;
+    --button-secondary-border: #9e2d9e;
 }
 
 html {
@@ -23,61 +22,80 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
-/* Felles bakgrunnsbilde for alle sider */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/images/JavaPunkBakgrunn.png');
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px) brightness(0.7);
-  z-index: -1;
-}
+    /* Felles bakgrunnsbilde for alle sider */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/JavaPunkBakgrunn.png');
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px) brightness(0.7);
+        z-index: -1;
+    }
 
-/* Fjerne blur-effekten når body har klassen "no-blur" */
-body.no-blur::before {
-  filter: none;
-}
+    /* Fjerne blur-effekten når body har klassen "no-blur" */
+    body.no-blur::before {
+        filter: none;
+    }
 
 /*Felles styling for alle hoved-bokser på alle sider*/
 .container.main-box {
-  font-family: 'PixelDigilove', sans-serif;
-  color: #f7e40f;
-  position: relative;
-  z-index: 1;
-  background-color: #544C70CC;
-  padding: 30px;
-  border-radius: 10px;
-  max-width: 680px;
-  margin: 40px auto;
+    font-family: 'PixelDigilove', sans-serif;
+    color: #f7e40f;
+    position: relative;
+    z-index: 1;
+    background-color: #544C70CC;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 680px;
+    margin: 40px auto;
 }
-/*De som skal være sentrert på siden*/
-.container.main-box.centered {
-  margin: 40px auto;
-  text-align: center;
+    /*De som skal være sentrert på siden*/
+    .container.main-box.centered {
+        margin: 40px auto;
+        text-align: center;
+    }
+
+.container-login {
+    font-family: 'PixelDigilove', sans-serif;
+    color: #f7e40f;
+    position: relative;
+    z-index: 1;
+    background-color: #544C70CC;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 300px;
+    margin: 40px auto;
+    text-align: center;
 }
 
 .auth-page {
-  min-height: calc(100vh - 120px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a.disabled-module {
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 .auth-page .main-box p {
@@ -88,21 +106,39 @@ body.no-blur::before {
 }
 
 .modulesAndQuiz {
-  min-height: calc(100vh - 120px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 24px 0;
-  box-sizing: border-box;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 24px 0;
+    box-sizing: border-box;
+}
+
+.score {
+    position: absolute;
+    right: 100px;
+    top: 50px;
+    font-family: 'PixelDigilove', sans-serif;
+    color: #f7e40f;
+    z-index: 1;
+    background-color: #544C70CC;
+    padding: 15px;
+    border-radius: 10px;
+    border-color: #f7e40f;
+    border: 2px solid;
+    max-width: 500px;
+    margin: 10px auto;
+    text-align: center;
 }
 
 .modulesAndQuiz .container.main-box {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .quiz-answer {
-  color: #F0E8FF;
+    color: #F0E8FF;
 }
 
 .text-success-custom {
@@ -122,102 +158,104 @@ body.no-blur::before {
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
 
 /* Legge til egen font*/
 /* Pixel Digilove normal*/
 @font-face {
-  font-family: 'PixelDigilove';
-  src: url('../fonts/PixelDigivolve.otf') format('opentype'); 
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'PixelDigilove';
+    src: url('../fonts/PixelDigivolve.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 /* Pixel Digilove italic*/
 @font-face {
-  font-family: 'PixelDigiloveItalic';
-  src: url('../fonts/PixelDigivolveItalic.otf') format('opentype'); 
-  font-weight: bold;
-  font-style: italic;
-  font-display: swap;
+    font-family: 'PixelDigiloveItalic';
+    src: url('../fonts/PixelDigivolveItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
 }
 
 /*Knapper på sidene*/
 /* Start-knapp på startside */
 .startbtn {
-  font-size: 32px;
-  margin-top: 40px;
-  background-color: #6EBDEA;
-  border-color: #6B9BCF;
+    font-size: 32px;
+    margin-top: 40px;
+    background-color: #6EBDEA;
+    border-color: #6B9BCF;
 }
 
-.startbtn:hover {
-  background-color: #6B9BCF;
-  border-color: #5B5F90;
-}
+    .startbtn:hover {
+        background-color: #6B9BCF;
+        border-color: #5B5F90;
+    }
 
 /*Generell styling for alle knapper på alle sider*/
 .btn-primary {
-  font-size: 26px;
-  color: var(--button-primary-text);
-  background-color: var(--button-primary-bg);
-  border-color: var(--button-primary-border);
+    font-size: 26px;
+    color: var(--button-primary-text);
+    background-color: var(--button-primary-bg);
+    border-color: var(--button-primary-border);
 }
 
-.btn-primary:hover {
-  color: var(--button-primary-text);
-  background-color: var(--button-primary-hover);
-  border-color: var(--button-primary-hover);
-}
+    .btn-primary:hover {
+        color: var(--button-primary-text);
+        background-color: var(--button-primary-hover);
+        border-color: var(--button-primary-hover);
+    }
 
 .btn-secondary-custom {
-  font-size: 16px;
-  color: var(--button-secondary-text);
-  background-color: var(--button-secondary-bg);
-  border-color: var(--button-secondary-border);
+    font-size: 16px;
+    color: var(--button-secondary-text);
+    background-color: var(--button-secondary-bg);
+    border-color: var(--button-secondary-border);
 }
 
-.btn-secondary-custom:hover {
-  color: var(--button-secondary-text);
-  background-color: var(--button-secondary-hover);
-  border-color: var(--button-secondary-hover);
-}
+    .btn-secondary-custom:hover {
+        color: var(--button-secondary-text);
+        background-color: var(--button-secondary-hover);
+        border-color: var(--button-secondary-hover);
+    }
 
 .optionbtn {
-  font-size: 32px;
-  margin-top: 40px;
-  min-width: 100%;
+    font-size: 32px;
+    margin-top: 40px;
+    min-width: 100%;
 }
 
 /*Knappene i moduler-siden*/
 .module-button {
-  display: block;
-  padding: 10px 20px;
-  font-size: 32px;
+    display: block;
+    padding: 10px 20px;
+    font-size: 32px;
 }
 
-.module-button:nth-of-type(even){
-  margin-left: auto;
-}
+    .module-button:nth-of-type(even) {
+        margin-left: auto;
+    }
 
-.module-button:nth-of-type(odd){
-  margin-right: auto;
-}
+    .module-button:nth-of-type(odd) {
+        margin-right: auto;
+    }
 
 .main-box form {
-  gap: 16px;
+    gap: 16px;
 }
+
 .main-box .form-label {
-  margin-bottom: 6px;
+    margin-bottom: 6px;
 }
+
 .main-box .btn {
-  margin-top: 8px;
+    margin-top: 8px;
 }
 
 .question-list {
@@ -240,15 +278,15 @@ body.no-blur::before {
     border-radius: 8px;
 }
 
-.question-item p {
-    margin: 0;
-    flex: 1;
-    overflow-wrap: anywhere;
-}
+    .question-item p {
+        margin: 0;
+        flex: 1;
+        overflow-wrap: anywhere;
+    }
 
-.question-item .btn {
-    flex-shrink: 0;
-}
+    .question-item .btn {
+        flex-shrink: 0;
+    }
 
 .question-actions {
     display: flex;
@@ -263,9 +301,9 @@ body.no-blur::before {
         flex-direction: column;
     }
 
-    .question-item .btn {
-        align-self: flex-start;
-    }
+        .question-item .btn {
+            align-self: flex-start;
+        }
 }
 
 /* resultat siden*/
@@ -274,14 +312,14 @@ body.no-blur::before {
     box-shadow: 0 0 20px #3E3658CC;
 }
 
-.quiz-finished h2 {
-    color: #F7E40F;
-    font-size: 36px;
-    margin-bottom: 24px;
-}
+    .quiz-finished h2 {
+        color: #F7E40F;
+        font-size: 36px;
+        margin-bottom: 24px;
+    }
 
-.quiz-finished p {
-    color: #F0E8FF;
-    font-size: 24px;
-    margin-bottom: 28px;
-}
+    .quiz-finished p {
+        color: #F0E8FF;
+        font-size: 24px;
+        margin-bottom: 28px;
+    }

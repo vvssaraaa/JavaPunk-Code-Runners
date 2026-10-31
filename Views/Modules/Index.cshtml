@@ -13,10 +13,11 @@
             <a class="btn btn-secondary" asp-action="Create">Add new module</a>
             <a class="btn btn-secondary" asp-controller="Admin" asp-action="Logout">Logout</a>
         }
+        <p>Score at least 60 points to unlock the next module</p>
         <div class="module-path">
             @foreach (var module in Model)
             {
-                <a class="btn btn-primary module-button @(ViewBag.LastCompletedModule + 1 < module.Id ? "disabled" : "")"
+                <a class="btn btn-primary module-button @(ViewBag.LastCompletedModule + 1 < module.Id ? "disabled-module" : "")"
                    asp-controller="Quiz"
                    asp-action="Start"
                    asp-route-moduleId="@module.Id"
@@ -26,5 +27,7 @@
                 </a>
             }
         </div>
+        <div style="height: 15px"></div>
+        <a class="btn btn-secondary-custom" asp-controller="Menu" asp-action="Index">Back to Menu</a>
     </div>
 </div>
